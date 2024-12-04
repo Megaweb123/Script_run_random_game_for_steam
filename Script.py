@@ -1,18 +1,18 @@
 from pathlib import Path
 import subprocess
 import random
+import time
 
 def find_acf_files(directory):
     p = Path(directory)
     return list(p.rglob('*.acf'))
-print('Введите название дисков, на которых у вас установленны игры Steam через ";"\nПример:\nC:\Program Files (x86)\Steam\steamapps;D:\Steam\steamapps')
+print('Введите путь до всех steamapps, которые у вас установленны через ";"\n\nПример:\n        C:\Program Files (x86)\Steam\steamapps ; D:\Steam\steamapps        ')
 directorys = input()
 directorys_list = directorys.split(';')
-print('\n\n\nТеперь ждем запуска игры и радуемся 😉\n\n\n')
+print('\n\n\nИщу игры, устанновленые в указанных дирикториях\n\n\n')
 all_games = {}
-print(directorys_list)
 for i in directorys_list:
-    start_directory = f"{i}\\"
+    start_directory = f"{i.strip()}\\"
     acf_files = find_acf_files(start_directory)
 
     for acf_file in acf_files:
@@ -33,6 +33,8 @@ for i in directorys_list:
                 name = string[name_a:name_b-1].strip()
                 name_c = name[:-1]
                 game_name = name_c[name[:-1].rfind('"')+1:]
+                if game_name == '':
+                    break
                 id_a = string.find('appid')
                 id_b = string.find('universe')
                 id = string[id_a:id_b-1].strip()
@@ -48,10 +50,12 @@ names_games = []
 for i in all_games.keys():
     if i != '':
         names_games.append(i)
-
-random.choice(names_games)
-start = f'steam://rungameid/{all_games[random.choice(names_games)]}'
-print(f'Всего найдено игр: {len(all_games)} шт.')
+game_for_play = random.choice(names_games)
+start = f'steam://rungameid/{all_games[game_for_play]}'
+print(f'\nВсего найдено игр: {len(all_games)} шт.')
+print(f'\nИгра, в которую ты будешь играть, называется: {game_for_play}\nПриятной игры!\n\n\n')
+print(f'Нажни Enter чтобы начать!')
+go = input()
 # Выполнение команды и получение результата
 subprocess.run(['start', start], shell=True)
 
