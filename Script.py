@@ -5,10 +5,10 @@ import random
 def find_acf_files(directory):
     p = Path(directory)
     return list(p.rglob('*.acf'))
-print('Введите название дисков, на которых у вас установленны игры Steam через :\nПример:\nC:\Program Files (x86)\Steam\steamapps;D:\Steam\steamapps')
+print('Введите название дисков, на которых у вас установленны игры Steam через ";"\nПример:\nC:\Program Files (x86)\Steam\steamapps;D:\Steam\steamapps')
 directorys = input()
 directorys_list = directorys.split(';')
-print('Теперь ждем запуска игры и радуемся 😉')
+print('\n\n\nТеперь ждем запуска игры и радуемся 😉\n\n\n')
 all_games = {}
 print(directorys_list)
 for i in directorys_list:
@@ -39,10 +39,11 @@ for i in directorys_list:
                 id_c = id[:-1]
                 game_id = id_c[id[:-1].rfind('"')+1:]
                 all_games[game_name] = game_id
+                print(f'Добавил в список игру {game_name}')
         except ValueError as err:
             print(err)
 
-print(all_games)
+
 names_games = []
 for i in all_games.keys():
     if i != '':
@@ -50,7 +51,7 @@ for i in all_games.keys():
 
 random.choice(names_games)
 start = f'steam://rungameid/{all_games[random.choice(names_games)]}'
-
+print(f'Всего найдено игр: {len(all_games)} шт.')
 # Выполнение команды и получение результата
 subprocess.run(['start', start], shell=True)
 
