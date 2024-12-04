@@ -5,13 +5,14 @@ import random
 def find_acf_files(directory):
     p = Path(directory)
     return list(p.rglob('*.acf'))
-print('Введите название дисков, на которых у вас установленны игры Steam через :\nПример:\nC:D:K')
+print('Введите название дисков, на которых у вас установленны игры Steam через :\nПример:\nC:\Program Files (x86)\Steam\steamapps;D:\Steam\steamapps')
 directorys = input()
-directorys_list = directorys.split(':')
+directorys_list = directorys.split(';')
+print('Теперь ждем запуска игры и радуемся 😉')
 all_games = {}
 print(directorys_list)
 for i in directorys_list:
-    start_directory = f"{i}:\\"
+    start_directory = f"{i}\\"
     acf_files = find_acf_files(start_directory)
 
     for acf_file in acf_files:
