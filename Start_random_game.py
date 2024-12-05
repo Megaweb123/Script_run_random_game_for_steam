@@ -41,7 +41,7 @@ for i in directorys_list:
                 id_c = id[:-1]
                 game_id = id_c[id[:-1].rfind('"')+1:]
                 all_games[game_name] = game_id
-                print(f'Добавил в список игру {game_name}')
+                print(f'Добавил в список игру {game_name}, id = {game_id}')
         except ValueError as err:
             print(err)
 
